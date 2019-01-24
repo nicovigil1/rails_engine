@@ -42,5 +42,14 @@ namespace :seed do
             Transaction.create!(r.to_h)
         end
     end
+
+    task all: :envoirnment do 
+        Rake::Task["seed:customers"].invoke
+        Rake::Task["seed:invoices"].invoke
+        Rake::Task["seed:invoice_items"].invoke
+        Rake::Task["seed:items"].invoke
+        Rake::Task["seed:merchants"].invoke
+        Rake::Task["seed:transactions"].invoke
+    end 
 end
 
