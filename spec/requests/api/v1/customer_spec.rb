@@ -58,5 +58,33 @@ describe "Customer API" do
             expect(response).to be_successful
             expect(JSON.parse(response.body)["data"].length).to eq(2)
         end 
+        it 'can find a merchant by created at' do 
+            customer = create(:customer, created_at: "2019-01-24 12:00:00 UTC")
+            customer1 = create(:customer, created_at: "2019-01-24 12:00:00 UTC")
+            
+            get "/api/v1/customers/find?created_at=#{customer.created_at}"
+            
+            expect(response).to be_successful
+            expect(JSON.parse(response.body)["data"]["id"]).to eq("#{customer.id}")
+            
+            get "/api/v1/customers/find_all?created_at=#{customer.created_at}"
+            
+            expect(response).to be_successful
+            expect(JSON.parse(response.body)["data"].length).to eq(2)
+        end 
+        it 'can find a merchant by updated at' do 
+            customer = create(:customer, updated_at: "2019-01-24 12:00:00 UTC")
+            customer1 = create(:customer, updated_at: "2019-01-24 12:00:00 UTC")
+
+            get "/api/v1/customers/find?updated_at=#{customer.updated_at}"
+
+            expect(response).to be_successful
+            expect(JSON.parse(response.body)["data"]["id"]).to eq("#{customer.id}")
+
+            get "/api/v1/customers/find_all?updated_at=#{customer.updated_at}"
+
+            expect(response).to be_successful
+            expect(JSON.parse(response.body)["data"].length).to eq(2)
+        end 
     end 
 end
