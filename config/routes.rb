@@ -12,18 +12,11 @@ Rails.application.routes.draw do
         end
       end
 
-      # scope :merchants do 
-      #   get '/find', to: "search#find_merchant"
-      #   get '/find_all', to: "search#find_merchants"
-      # end 
-      resources :merchants, only: [:index, :show]
-
-      # scope :customers do 
-      #   get '/find', to: "search#find_customer"
-      #   get '/find_all', to: "search#find_customers"
-      # end 
+      resources :merchants, only: [:index, :show] do 
+        get '/items/:id', to: "items#show"
+        get '/items', to: "items#index"
+      end 
       resources :customers, only: [:index, :show]
-
       resources :invoices, only: [:index, :show]
       resources :items, only: [:index, :show]
       resources :invoice_items, only: [:index, :show]
