@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api do 
     namespace :v1 do
 
-      scopes = ["merchant", "customer", "invoice", "invoice_item"]
+      scopes = ["merchant", "customer", "invoice", "invoice_item", "item"]
 
       scopes.each do |resource|
         scope resource.pluralize.to_sym do 
