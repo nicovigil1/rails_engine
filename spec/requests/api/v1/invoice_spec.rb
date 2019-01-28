@@ -11,7 +11,7 @@ describe "invoice api" do
         get '/api/v1/invoices'
 
         expect(response).to be_successful
-        expect(JSON.parse(response.body).count).to eq(2)
+        expect(JSON.parse(response.body)["data"].count).to eq(2)
     end 
 
     it 'can return a single invoices as json' do 
@@ -21,7 +21,7 @@ describe "invoice api" do
 
         get "/api/v1/invoices/#{invoice.id}"
         expect(response).to be_successful
-        expect(JSON.parse(response.body)["merchant_id"]).to eq(merchant.id)
+        expect(JSON.parse(response.body)["data"]["attributes"]["status"]).to eq(invoice.status)
     end
 
     describe 'can find one or all customers by the attributes:' do

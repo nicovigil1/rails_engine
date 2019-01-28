@@ -10,7 +10,7 @@ describe "transaction api" do
         get "/api/v1/transactions"
 
         expect(response).to be_successful
-        expect(JSON.parse(response.body).count).to eq(2) 
+        expect(JSON.parse(response.body)["data"].count).to eq(2) 
     end 
 
     it 'can return a single transaction as json' do 
@@ -22,7 +22,7 @@ describe "transaction api" do
         get "/api/v1/transactions/#{transaction.id}"
 
         expect(response).to be_successful 
-        expect(JSON.parse(response.body)["id"]).to eq(transaction.id)
+        expect(JSON.parse(response.body)["data"]["id"]).to eq(transaction.id.to_s)
     end 
 
     describe 'can find all or one transactions by the attribute' do 

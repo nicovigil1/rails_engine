@@ -11,7 +11,7 @@ describe "invoice_item api" do
         get "/api/v1/invoice_items"
 
         expect(response).to be_successful 
-        expect(JSON.parse(response.body).count).to eq(2) 
+        expect(JSON.parse(response.body)["data"].count).to eq(2) 
     end 
 
     it 'can return a single invoice item as json' do 
@@ -24,7 +24,7 @@ describe "invoice_item api" do
         get "/api/v1/invoice_items/#{invoice_item.id}"
 
         expect(response).to be_successful 
-        expect(JSON.parse(response.body)["id"]).to eq(invoice_item.id) 
+        expect(JSON.parse(response.body)["data"]["id"]).to eq(invoice_item.id.to_s) 
     end 
 
     describe "can find invoice_item by the attribute:" do

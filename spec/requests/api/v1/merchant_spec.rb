@@ -18,6 +18,28 @@ describe "merchant api" do
         expect(JSON.parse(response.body)["data"]["id"]).to eq(merchant.id.to_s)
     end 
 
+
+    describe "can show relationships" do
+        it 'for items' do 
+            merchant = create(:merchant)
+            item1, item2 = create_list(:item, 2, merchant: merchant)
+
+            # one item
+            get "/api/v1/merchants/#{merchant.id}/items/#{item1.id}"
+
+            expect(response).to be_successful
+            expect(JSON.parse(response.body)["data"]["id"]).to eq(item1.id.to_s) 
+            # all items
+            get "/api/v1/merchants/#{merchant.id}/items"
+
+            expect(response).to be_successful
+            expect(JSON.parse(response.body)["data"].length).to eq(2)
+        end 
+    end
+    
+
+
+
     describe 'can find a specific merchant & all merchants by attribute' do 
         it 'by primary key (id)' do 
             merchant = create(:merchant)

@@ -6,8 +6,8 @@ describe "Customer API" do
 
         get '/api/v1/customers'
 
-        the_expected = JSON.parse(response.body).count 
         expect(response).to be_successful 
+        the_expected = JSON.parse(response.body)["data"].count 
         expect(the_expected).to eq(3)
     end 
 
@@ -17,7 +17,7 @@ describe "Customer API" do
         get '/api/v1/customers/1'
 
         expect(response).to be_successful
-        expect(JSON.parse(response.body)["first_name"]).to eq(customer.first_name) 
+        expect(JSON.parse(response.body)["data"]["attributes"]["first_name"]).to eq(customer.first_name) 
     end
     
     describe 'can find one or all by parameters' do
