@@ -34,6 +34,13 @@ class Api::V1::SearchController < ApplicationController
         render json: ItemSerializer.new(Item.where(item_params))
     end 
 
+    def find_transaction
+        render json: TransactionSerializer.new(Transaction.find_by(transaction_params))
+    end 
+    def find_transactions
+        render json: TransactionSerializer.new(Transaction.where(transaction_params))
+    end 
+
     private
     
     def merchant_params
@@ -54,5 +61,9 @@ class Api::V1::SearchController < ApplicationController
 
     def item_params
         params.permit(:name, :desciption, :unit_price)
+    end
+
+    def transaction_params
+        params.permit(:credit_card_number, :credit_card_expiration_date, :result)
     end 
 end 
