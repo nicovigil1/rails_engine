@@ -6,9 +6,9 @@ Rails.application.routes.draw do
       scopes = ["merchant", "customer", "invoice", "invoice_item", "item", "transaction"]
 
       scopes.each do |resource|
-        scope resource.pluralize.to_sym do 
-          get 'find', to: "search#find_#{resource}"
-          get 'find_all', to: "search#find_#{resource.pluralize}"
+        namespace resource.pluralize.to_sym do
+          get 'find', to: "search#show"
+          get 'find_all', to: "search#index"
         end
       end
 
