@@ -22,15 +22,35 @@ describe "merchant api" do
     describe "can show relationships" do
         it 'for items' do 
             merchant = create(:merchant)
+            merchant2 = create(:merchant)
             item1, item2 = create_list(:item, 2, merchant: merchant)
-
+            item3 = create(:item, merchant: merchant2)
             # one item
             get "/api/v1/merchants/#{merchant.id}/items/#{item1.id}"
 
             expect(response).to be_successful
             expect(JSON.parse(response.body)["data"]["id"]).to eq(item1.id.to_s) 
+            
             # all items
             get "/api/v1/merchants/#{merchant.id}/items"
+
+            expect(response).to be_successful
+            expect(JSON.parse(response.body)["data"].length).to eq(2)
+        end 
+
+        it 'for invoices' do 
+            merchant = create(:merchant)
+            merchant2 = create(:merchant)
+            customer = create(:customer)
+            invoice1 = create(:invoice, merchant:merchant, customer: customer)
+            invoice2 = create(:invoice, merchant:merchant2, customer: customer)
+            
+            get "/api/v1/merchants/#{merchant.id}/invoices/#{invoice1.id}"
+
+            expect(response).to be_successful
+            expect(JSON.parse(response.body)["data"]["id"]).to eq(invoice1.id.to_s)
+
+            get "/api/v1/merchants/#{merchant.id}/invoices"
 
             expect(response).to be_successful
             expect(JSON.parse(response.body)["data"].length).to eq(2)
