@@ -13,6 +13,13 @@ class Api::V1::SearchController < ApplicationController
         render json: CustomerSerializer.new(Customer.where(customer_params))
     end 
 
+    def find_invoice
+        render json: InvoiceSerializer.new(Invoice.find_by(invoice_params))
+    end
+    def find_invoices
+        render json: InvoiceSerializer.new(Invoice.where(invoice_params))
+    end
+    
     private
     
     def merchant_params
@@ -20,6 +27,10 @@ class Api::V1::SearchController < ApplicationController
     end
     
     def customer_params
-        customer = params.permit(:first_name, :last_name)
+        params.permit(:first_name, :last_name)
     end
+
+    def invoice_params
+        params.permit(:status)
+    end 
 end 
