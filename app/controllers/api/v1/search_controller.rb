@@ -27,6 +27,13 @@ class Api::V1::SearchController < ApplicationController
         render json: InvoiceItemSerializer.new(InvoiceItem.where(invoice_item_params))
     end
 
+    def find_item
+        render json: ItemSerializer.new(Item.find_by(item_params))
+    end 
+    def find_items
+        render json: ItemSerializer.new(Item.where(item_params))
+    end 
+
     private
     
     def merchant_params
@@ -43,5 +50,9 @@ class Api::V1::SearchController < ApplicationController
 
     def invoice_item_params
         params.permit(:quantity, :unit_price)
+    end 
+
+    def item_params
+        params.permit(:name, :desciption, :unit_price)
     end 
 end 
