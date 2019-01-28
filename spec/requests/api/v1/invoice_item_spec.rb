@@ -78,6 +78,42 @@ describe "invoice_item api" do
             expect(response).to be_successful 
             expect(JSON.parse(response.body)["data"].length).to eq(2)
         end 
+        it 'created_at' do 
+            merchant = create(:merchant)
+            customer = create(:customer)
+            item = create(:item, merchant: merchant)
+            invoice = create(:invoice, merchant: merchant, customer: customer)
+            invoice_item = create(:invoice_item, invoice: invoice, item: item, unit_price: 12, created_at: "2019-01-24 12:00:00 UTC")
+            invoice_item1 = create(:invoice_item, invoice: invoice, item: item, unit_price: 12, created_at: "2019-01-24 12:00:00 UTC")
+
+            get "/api/v1/invoice_items/find?created_at=#{invoice_item.created_at}"
+
+            expect(response).to be_successful 
+            expect(JSON.parse(response.body)["data"]["id"]).to eq(invoice_item.id.to_s) 
+
+            get "/api/v1/invoice_items/find_all?created_at=#{invoice_item.created_at}"
+
+            expect(response).to be_successful 
+            expect(JSON.parse(response.body)["data"].length).to eq(2)
+        end 
+        it 'updated_at' do 
+            merchant = create(:merchant)
+            customer = create(:customer)
+            item = create(:item, merchant: merchant)
+            invoice = create(:invoice, merchant: merchant, customer: customer)
+            invoice_item = create(:invoice_item, invoice: invoice, item: item, unit_price: 12, updated_at: "2019-01-24 12:00:00 UTC")
+            invoice_item1 = create(:invoice_item, invoice: invoice, item: item, unit_price: 12, updated_at: "2019-01-24 12:00:00 UTC")
+
+            get "/api/v1/invoice_items/find?updated_at=#{invoice_item.updated_at}"
+
+            expect(response).to be_successful 
+            expect(JSON.parse(response.body)["data"]["id"]).to eq(invoice_item.id.to_s) 
+
+            get "/api/v1/invoice_items/find_all?updated_at=#{invoice_item.updated_at}"
+
+            expect(response).to be_successful 
+            expect(JSON.parse(response.body)["data"].length).to eq(2)
+        end 
     end
     
 end
