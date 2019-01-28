@@ -1,3 +1,4 @@
+require 'rails_helper'
 describe "Customer API" do
     describe 'can find one or all by parameters' do
         it 'can find a merchant by id' do 
